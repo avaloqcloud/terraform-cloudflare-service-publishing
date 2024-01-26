@@ -1,4 +1,4 @@
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/josip-stanic/terraform-cloudflare-service-publishing/archive/refs/heads/main.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/avaloqcloud/terraform-cloudflare-service-publishing/archive/refs/tags/v0.2.0.zip)
 
 
 ## Terraform Cloudflare Service Publishing
@@ -15,8 +15,8 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.17.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.6.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | = 4.17.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
