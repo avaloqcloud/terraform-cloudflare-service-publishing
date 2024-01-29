@@ -10,13 +10,14 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.2.9 |
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | = 4.17.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | = 4.17.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6.0 |
 
 ## Modules
 
