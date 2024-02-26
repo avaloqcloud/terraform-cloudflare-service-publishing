@@ -9,14 +9,14 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.2.9 |
-| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | = 4.24.0 |
+| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | = 4.25.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | = 4.24.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | = 4.25.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6.0 |
 
 ## Modules
@@ -27,12 +27,12 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [cloudflare_access_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.24.0/docs/resources/access_application) | resource |
-| [cloudflare_access_policy.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.24.0/docs/resources/access_policy) | resource |
-| [cloudflare_access_service_token.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.24.0/docs/resources/access_service_token) | resource |
-| [cloudflare_record.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.24.0/docs/resources/record) | resource |
-| [cloudflare_spectrum_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.24.0/docs/resources/spectrum_application) | resource |
-| [cloudflare_tunnel.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.24.0/docs/resources/tunnel) | resource |
+| [cloudflare_access_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.25.0/docs/resources/access_application) | resource |
+| [cloudflare_access_policy.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.25.0/docs/resources/access_policy) | resource |
+| [cloudflare_access_service_token.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.25.0/docs/resources/access_service_token) | resource |
+| [cloudflare_record.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.25.0/docs/resources/record) | resource |
+| [cloudflare_spectrum_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.25.0/docs/resources/spectrum_application) | resource |
+| [cloudflare_tunnel.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.25.0/docs/resources/tunnel) | resource |
 | [random_id.these](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 
 ## Inputs
