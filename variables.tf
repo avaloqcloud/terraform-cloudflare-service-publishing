@@ -106,7 +106,7 @@ variable "service_publishing" {
         )
       ]))
     ) : true
-    error_message = "Attributes 'redirect_uris', 'grant_types', 'scopes' and 'app_launcher_url' must be set if Access Application type is'saas' and 'saas_app' auth_type is 'oidc'."
+    error_message = "Attributes 'redirect_uris', 'grant_types', 'scopes' and 'app_launcher_url' must be set if Access Application 'type' is 'saas' and 'saas_app.auth_type' is 'oidc'."
   }
   ## Spectrum Application
   ### origin_direct or origin_dns (mutually exclusive)
