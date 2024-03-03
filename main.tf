@@ -43,11 +43,11 @@ resource "cloudflare_access_application" "these" {
       (try(each.value, null) != null) && (try(each.value.saas_app, null) != null)
     ) ? ([each.value]) : ([])
     content {
-      auth_type = try(each.value.saas_app.auth_type, null)
-      redirect_uris = try(each.value.saas_app.redirect_uris, null)
-      grant_types = try(each.value.saas_app.grant_types, null)
-      scopes = try(each.value.saas_app.scopes, null)
-      app_launcher_url = try(each.value.saas_app.app_launcher_url, null)
+      auth_type          = try(each.value.saas_app.auth_type, null)
+      redirect_uris      = try(each.value.saas_app.redirect_uris, null)
+      grant_types        = try(each.value.saas_app.grant_types, null)
+      scopes             = try(each.value.saas_app.scopes, null)
+      app_launcher_url   = try(each.value.saas_app.app_launcher_url, null)
       group_filter_regex = try(each.value.saas_app.group_filter_regex, ".*")
     }
   }
