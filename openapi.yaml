@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: "Service Publishing"
+  description: "Service Publishing with Cloudflare."
+  version: 0.2.2
+  x-logo:
+    url: "https://avatars.githubusercontent.com/u/140297229?s=400"
+    backgroundColor: '#FFFFFF'
+    altText: "Logo"
+servers:
+- url: https://localhost:80
+tags:
+- name: "Objects"
+  x-displayName: "All Objects"
+  description: |
+    ## Service Publishing
+    <SchemaDefinition schemaRef="#/components/schemas/service_publishing"/>
+paths: {}
+components:
+  schemas:
+    service_publishing:
+      type: object
+      description: "Service Publishing input object."
+      properties:
+        # Array of defined objects
+        records:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/record'
+        tunnels:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/tunnel'
+        access_applications:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/access_application'
+        access_policies:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/access_policy'
+        access_service_tokens:
+          type: array
+          items:
+            anyOf:
+              - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_service-tokens'
+    # Derived objects from upstream
+    record:
+      type: object
+      allOf:
+        # Base properties
+        - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/dns-records_dns-record'
+        # Zone identifier
+        - properties:
+            zone_id:
+              type: string
+              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/dns-records_identifier'
+    tunnel:
+      type: object
+      allOf:
+        - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/tunnel_cfd_tunnel'
+        - properties:
+            account_id:
+              type: string
+              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/tunnel_cf_account_id'
+    access_application:
+      type: object
+      allOf:
+        - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_apps'
+        - properties:
+            zone_id:
+              type: string
+              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_identifier'
+    access_policy:
+      type: object
+      allOf:
+        - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_schemas-policies'
+        - properties:
+            zone_id:
+              type: string
+              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_identifier'
+    access_service_token:
+      type: object
+      allOf:
+        - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_service-tokens'
+        - properties:
+            account_id:
+              type: string
+              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_identifier'
+    spectrum_application:
+      type: object
+      properties:
+        zone_id:
+          $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_identifier'
+        name:
+          $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/legacy-jhs_dns_name'
+        protocol:
+          $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/legacy-jhs_protocol'
+        origin_direct:
+          type: array
+          description: "A list of destination addresses to the origin."
+          example: "[\"tcp://192.0.2.1:22\"]"
+          items:
+            type: string
+        origin_dns:
+          $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/legacy-jhs_origin_dns'
+        origin_port:
+          $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/legacy-jhs_origin_port'
+        tls:
+          $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/legacy-jhs_tls'
