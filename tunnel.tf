@@ -29,7 +29,7 @@ resource "cloudflare_tunnel_config" "these" {
             for_each = (try(ingress_rule.value.origin_request, null) != null) ? ([ingress_rule.value.origin_request]) : ([])
             content {
               dynamic "access" {
-                for_each = (try(ingress_rule.value.access, null) != null) ? ([ingress_rule.value.access]) : ([])
+                for_each = (try(origin_request.value.access, null) != null) ? ([origin_request.value.access]) : ([])
                 content {
                   aud_tag   = try(access.value.aud_tag, null)
                   required  = try(access.value.required, null)
@@ -43,11 +43,11 @@ resource "cloudflare_tunnel_config" "these" {
               http2_origin             = try(origin_request.value.http2_origin, null)
               http_host_header         = try(origin_request.value.http_host_header, null)
               dynamic "ip_rules" {
-                for_each = (try(ingress_rule.value.ip_rules, null) != null) ? ([ingress_rule.value.ip_rules]) : ([])
+                for_each = (try(origin_request.value.ip_rules, null) != null) ? ([origin_request.value.ip_rules]) : ([])
                 content {
-                  allow  = try(access.value.allow, null)
-                  ports  = try(access.value.ports, null)
-                  prefix = try(access.value.prefix, null)
+                  allow  = try(ip_rules.value.allow, null)
+                  ports  = try(ip_rules.value.ports, null)
+                  prefix = try(ip_rules.value.prefix, null)
                 }
               }
               keep_alive_connections = try(origin_request.value.keep_alive_connections, null)
@@ -65,10 +65,10 @@ resource "cloudflare_tunnel_config" "these" {
         }
       }
       dynamic "origin_request" {
-        for_each = (try(config.default_origin_request, null) != null) ? ([config.value.default_origin_request]) : ([])
+        for_each = (try(config.value.default_origin_request, null) != null) ? ([config.value.default_origin_request]) : ([])
         content {
           dynamic "access" {
-            for_each = (try(config.value.access, null) != null) ? ([config.value.access]) : ([])
+            for_each = (try(origin_request.value.access, null) != null) ? ([origin_request.value.access]) : ([])
             content {
               aud_tag   = try(access.value.aud_tag, null)
               required  = try(access.value.required, null)
@@ -82,11 +82,11 @@ resource "cloudflare_tunnel_config" "these" {
           http2_origin             = try(origin_request.value.http2_origin, null)
           http_host_header         = try(origin_request.value.http_host_header, null)
           dynamic "ip_rules" {
-            for_each = (try(config.value.ip_rules, null) != null) ? ([config.value.ip_rules]) : ([])
+            for_each = (try(origin_request.value.ip_rules, null) != null) ? ([origin_request.value.ip_rules]) : ([])
             content {
-              allow  = try(access.value.allow, null)
-              ports  = try(access.value.ports, null)
-              prefix = try(access.value.prefix, null)
+              allow  = try(ip_rules.value.allow, null)
+              ports  = try(ip_rules.value.ports, null)
+              prefix = try(ip_rules.value.prefix, null)
             }
           }
           keep_alive_connections = try(origin_request.value.keep_alive_connections, null)
