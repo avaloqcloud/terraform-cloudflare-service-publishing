@@ -5,7 +5,7 @@ variable "service_publishing" {
       zone_id = string,
       name    = string,
       value   = optional(string), # required if matching tunnel ommited
-      type    = string,
+      type    = optional(string), # required if matching tunnel ommited
       ttl     = number
       proxied = bool,
     }))),
