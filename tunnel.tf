@@ -12,12 +12,17 @@ resource "cloudflare_tunnel" "these" {
 }
 
 resource "cloudflare_tunnel_config" "these" {
-  for_each   = (var.service_publishing.tunnels_config != null) ? ({ for tunnel_config in var.service_publishing.tunnels_config : tunnel_config.name => tunnel_config }) : ({})
+  for_each = (var.service_publishing.tunnels != null) ? (
+    alltrue(flatten([
+      for t in var.service_publishing.tunnels :
+      (t.config != null) # only process if optional tunnel.config is defined
+    ])) ? ({ for tunnel in var.service_publishing.tunnels : tunnel.name => tunnel }) : ({})
+  ) : ({})
   account_id = each.value.account_id
   # If Tunnel found with matching name use reference of tunnel, else take tunnel_id from input
   tunnel_id = (try(cloudflare_tunnel.these["${each.key}"], null) != null) ? (cloudflare_tunnel.these["${each.key}"].id) : (each.value.tunnel_id)
   dynamic "config" {
-    for_each = (try(each.value, null) != null) ? ([each.value.config]) : ([])
+    for_each = (try(each.value.config, null) != null) ? ([each.value.config]) : ([])
     content {
       dynamic "ingress_rule" {
         for_each = config.value.ingress_rules
