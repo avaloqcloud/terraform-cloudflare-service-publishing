@@ -47,7 +47,12 @@ components:
           type: array
           items:
             anyOf:
-              - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/access_service-tokens'
+              - $ref: '#/components/schemas/access_service_token'
+        spectrum_applications:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/spectrum_application'
     # Derived objects from upstream
     record:
       type: object
