@@ -13,6 +13,77 @@ variable "service_publishing" {
       account_id = string,
       name       = string,
     }))),
+    tunnels_config = optional(list(object({
+      account_id = string,
+      name       = optional(string), # required if wanting to match tunnel
+      tunnel_id  = optional(string), # required if matching tunnel ommited
+      config = object({
+        warp_routing = optional(object({
+          enabled = bool, # Whether WARP routing is enabled.
+        })),
+        default_origin_request = optional(object({
+          access = optional(object({
+            aud_tag   = optional(list(string)), # Audience tags of the access rule.
+            required  = optional(bool),         # Whether the access rule is required.
+            team_name = optional(string),       # Name of the team to which the access rule applies.
+          })),
+          bastion_mode             = optional(bool),
+          ca_pool                  = optional(string), # Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare. Defaults to "".
+          connect_timeout          = optional(string), # Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to establish TLS, which is controlled by tlsTimeout. Defaults to 30s.
+          disable_chunked_encoding = optional(bool),   # Disables chunked transfer encoding. Useful if you are running a Web Server Gateway Interface (WSGI) server. Defaults to false.
+          http2_origin             = optional(bool),   # Enables HTTP/2 support for the origin connection. Defaults to false.
+          http_host_header         = optional(string), # Sets the HTTP Host header on requests sent to the local service. Defaults to "".
+          ip_rules = optional(object({
+            allow  = optional(bool),         # Whether to allow the IP prefix.
+            ports  = optional(list(number)), # Ports to use within the IP rule.
+            prefix = optional(string),       # IP rule prefix.
+          })),
+          keep_alive_connections = optional(number), # Maximum number of idle keepalive connections between Tunnel and your origin. This does not restrict the total number of concurrent connections. Defaults to 100.
+          keep_alive_timeout     = optional(string), # Timeout after which an idle keepalive connection can be discarded. Defaults to 1m30s.
+          no_happy_eyeballs      = optional(bool),   # Disable the “happy eyeballs” algorithm for IPv4/IPv6 fallback if your local network has misconfigured one of the protocols. Defaults to false.
+          no_tls_verify          = optional(bool),   # Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted. Defaults to false.
+          origin_server_name     = optional(string), # Hostname that cloudflared should expect from your origin server certificate. Defaults to "".
+          proxy_address          = optional(string)  # cloudflared starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP. This configures the listen address for that proxy. Defaults to 127.0.0.1.
+          proxy_port             = optional(number), # cloudflared starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP. This configures the listen port for that proxy. If set to zero, an unused port will randomly be chosen. Defaults to 0.
+          proxy_type             = optional(string), # cloudflared starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP. This configures what type of proxy will be started. Available values: "", socks. Defaults to "".
+          tcp_keep_alive         = optional(string), # The timeout after which a TCP keepalive packet is sent on a connection between Tunnel and the origin server. Defaults to 30s.
+          tls_timeout            = optional(string), # Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server. Defaults to 10s.
+        })),
+        ingress_rules = list(object({
+          hostname = optional(string),
+          path     = optional(string),
+          service  = string,
+          origin_request = optional(object({
+            access = optional(object({
+              aud_tag   = optional(list(string)), # Audience tags of the access rule.
+              required  = optional(bool),         # Whether the access rule is required.
+              team_name = optional(string),       # Name of the team to which the access rule applies.
+            })),
+            bastion_mode             = optional(bool),
+            ca_pool                  = optional(string), # Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare. Defaults to "".
+            connect_timeout          = optional(string), # Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to establish TLS, which is controlled by tlsTimeout. Defaults to 30s.
+            disable_chunked_encoding = optional(bool),   # Disables chunked transfer encoding. Useful if you are running a Web Server Gateway Interface (WSGI) server. Defaults to false.
+            http2_origin             = optional(bool),   # Enables HTTP/2 support for the origin connection. Defaults to false.
+            http_host_header         = optional(string), # Sets the HTTP Host header on requests sent to the local service. Defaults to "".
+            ip_rules = optional(object({
+              allow  = optional(bool),         # Whether to allow the IP prefix.
+              ports  = optional(list(number)), # Ports to use within the IP rule.
+              prefix = optional(string),       # IP rule prefix.
+            })),
+            keep_alive_connections = optional(number), # Maximum number of idle keepalive connections between Tunnel and your origin. This does not restrict the total number of concurrent connections. Defaults to 100.
+            keep_alive_timeout     = optional(string), # Timeout after which an idle keepalive connection can be discarded. Defaults to 1m30s.
+            no_happy_eyeballs      = optional(bool),   # Disable the “happy eyeballs” algorithm for IPv4/IPv6 fallback if your local network has misconfigured one of the protocols. Defaults to false.
+            no_tls_verify          = optional(bool),   # Disables TLS verification of the certificate presented by your origin. Will allow any certificate from the origin to be accepted. Defaults to false.
+            origin_server_name     = optional(string), # Hostname that cloudflared should expect from your origin server certificate. Defaults to "".
+            proxy_address          = optional(string)  # cloudflared starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP. This configures the listen address for that proxy. Defaults to 127.0.0.1.
+            proxy_port             = optional(number), # cloudflared starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP. This configures the listen port for that proxy. If set to zero, an unused port will randomly be chosen. Defaults to 0.
+            proxy_type             = optional(string), # cloudflared starts a proxy server to translate HTTP traffic into TCP when proxying, for example, SSH or RDP. This configures what type of proxy will be started. Available values: "", socks. Defaults to "".
+            tcp_keep_alive         = optional(string), # The timeout after which a TCP keepalive packet is sent on a connection between Tunnel and the origin server. Defaults to 30s.
+            tls_timeout            = optional(string), # Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server. Defaults to 10s.
+          })),
+        })),
+      }),
+    }))),
     access_applications = optional(list(object({
       zone_id                   = string,
       name                      = string,
