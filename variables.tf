@@ -125,7 +125,6 @@ variable "service_publishing" {
       tls         = optional(string),
     })))
   })
-  ### TODO: Tunnel.config: Validate last rule does not have hostname and path attribute set. Must match all. Example: "service": "status:502"
   # Validation
   ## Record
   ### type
@@ -177,6 +176,21 @@ variable "service_publishing" {
     ) : true
     error_message = "Attributes 'redirect_uris', 'grant_types', 'scopes' and 'app_launcher_url' must be set if Access Application 'type' is 'saas' and 'saas_app.auth_type' is 'oidc'."
   }
+  ## Tunnel
+  ### t.config.ingress_rules
+  validation {
+    condition = (var.service_publishing != null && var.service_publishing.tunnels != null) ? (
+      alltrue(flatten([
+        for t in var.service_publishing.tunnels :
+        (
+          (t.config != null) ? (
+            (element(t.config.ingress_rules, length(t.config.ingress_rules)-1).hostname != null) || (element(t.config.ingress_rules, length(t.config.ingress_rules)-1).path != null) ? false : true
+          ) : true
+        )
+      ]))
+    ) : true
+    error_message = "Attributes 'hostname' and 'path' must not be set in the last tunnel.config.ingress_rules rule as it must match all requests. Example: {'service': 'status:502'}."
+  }
   ## Spectrum Application
   ### origin_direct or origin_dns (mutually exclusive)
   validation {
@@ -188,7 +202,7 @@ variable "service_publishing" {
         )
       ]))
     ) : true
-    error_message = "Either attribute 'origin_direct' or 'origin_dns' must be setfor Spectrum Application."
+    error_message = "Either attribute 'origin_direct' or 'origin_dns' must be set for Spectrum Application."
   }
   validation {
     condition = (var.service_publishing != null && var.service_publishing.spectrum_applications != null) ? (
