@@ -137,7 +137,9 @@ variable "service_publishing" {
     condition = (var.service_publishing != null && var.service_publishing.records != null) ? (
       alltrue(flatten([
         for r in var.service_publishing.records :
-        contains(["A", "AAAA", "CAA", "CNAME", "TXT", "SRV", "MX", "NS", "SPF", "PTR", ], r.type)
+        (r.type != null) ? (
+          contains(["A", "AAAA", "CAA", "CNAME", "TXT", "SRV", "MX", "NS", "SPF", "PTR", ], r.type)
+        ) : true
       ]))
     ) : true
     error_message = "Attribute 'type' for Record must be one of: 'A', 'AAAA', 'CAA', 'CNAME', 'TXT', 'SRV', 'MX', 'NS', 'SPF', 'PTR'."
@@ -147,10 +149,10 @@ variable "service_publishing" {
     condition = (var.service_publishing != null && var.service_publishing.records != null) && (var.service_publishing.tunnels == null) ? (
       alltrue(flatten([
         for r in var.service_publishing.records :
-        r.value != null
+        (r.value != null || r.type != null)
       ]))
     ) : true
-    error_message = "Attribute 'value' for Record must be specified if matching Tunnel ommited."
+    error_message = "Attributes 'value' and 'type' for Record must be specified if matching Tunnel ommited."
   }
   ## Access Application
   ### type
