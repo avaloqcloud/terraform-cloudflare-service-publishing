@@ -12,12 +12,7 @@ variable "service_publishing" {
     tunnels = optional(list(object({
       account_id = string,
       name       = string,
-    }))),
-    tunnels_config = optional(list(object({
-      account_id = string,
-      name       = optional(string), # required if wanting to match tunnel
-      tunnel_id  = optional(string), # required if matching tunnel ommited
-      config = object({
+      config = optional(object({
         warp_routing = optional(object({
           enabled = bool, # Whether WARP routing is enabled.
         })),
@@ -82,7 +77,7 @@ variable "service_publishing" {
             tls_timeout            = optional(string), # Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server. Defaults to 10s.
           })),
         })),
-      }),
+      })),
     }))),
     access_applications = optional(list(object({
       zone_id                   = string,
@@ -130,6 +125,7 @@ variable "service_publishing" {
       tls         = optional(string),
     })))
   })
+  ### TODO: Tunnel.config: Validate last rule does not have hostname and path attribute set. Must match all. Example: "service": "status:502"
   # Validation
   ## Record
   ### type

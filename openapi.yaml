@@ -33,11 +33,6 @@ components:
           items:
             anyOf:
               - $ref: '#/components/schemas/tunnel'
-        tunnels_config:
-          type: array
-          items:
-            anyOf:
-              - $ref: '#/components/schemas/tunnel_config'
         access_applications:
           type: array
           items:
@@ -77,14 +72,10 @@ components:
             account_id:
               type: string
               $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/tunnel_cf_account_id'
-    tunnel_config:
-      type: object
-      allOf:
-        -  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/tunnel_config'
         - properties:
-            account_id:
-              type: string
-              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/tunnel_cf_account_id'
+            config:
+              type: object
+              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/tunnel_config'
     access_application:
       type: object
       allOf:
