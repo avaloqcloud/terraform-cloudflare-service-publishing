@@ -89,7 +89,23 @@ variable "service_publishing" {
       allowed_idps              = optional(list(string)),
       self_hosted_domains       = optional(list(string)),
       saas_app = optional(object({
-        auth_type          = optional(string),
+        auth_type          = optional(string), # Optional identifier indicating the authentication protocol used for the saas app. Required for OIDC. Default: "saml"
+        # SAML
+        sp_entity_id = optional(string), # SAML: A globally unique name for an identity or service provider.
+        consumer_service_url = optional(string), # SAML: The service provider's endpoint that is responsible for receiving and parsing a SAML assertion.
+        name_id_format = optional(string), # SAML: The format of the name identifier sent to the SaaS application. Enum: "id" "email". Default: "email".
+        custom_attribute = optional(object({ # SAML: Custom attribute mapped from IDPs.
+          name = optional(string), # SAML: The name of the attribute as provided to the SaaS app.
+          name_format = optional(string), # SAML: A globally unique name for an identity or service provider.
+          friendly_name = optional(string), # SAML: A friendly name for the attribute as provided to the SaaS app.
+          required = optional(bool), # SAML: True if the attribute must be always present.
+          source = object({
+            name = string, # SAML: The name of the attribute as provided by the IDP.
+          }),
+          default_relay_state = optional(string), # SAML: The relay state used if not provided by the identity provider.
+          name_id_transform_jsonata = optional(string), # SAML: A [JSONata](https://jsonata.org/) expression that transforms an application's user identities into a NameID value for its SAML assertion. This expression should evaluate to a singular string. The output of this expression can override the `name_id_format` setting.
+        })),
+        # OIDC
         redirect_uris      = optional(list(string)), # OIDC: The permitted URL's for Cloudflare to return Authorization codes and Access/ID tokens. example: ["https://saas-app.example/sso/oauth2/callback"]
         grant_types        = optional(list(string)), # OIDC: The OIDC flows supported by this application. Example: ["authorization_code"]
         scopes             = optional(list(string)), # OIDC: Define the user information shared with access. Example: ["openid", "email", "profile", "groups"]
