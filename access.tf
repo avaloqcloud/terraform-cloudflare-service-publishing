@@ -7,7 +7,7 @@ resource "cloudflare_access_application" "these" {
   domain                    = (try(cloudflare_record.these["${each.key}"], null) != null) ? (cloudflare_record.these["${each.key}"].hostname) : (each.value.domain)
   self_hosted_domains       = each.value.self_hosted_domains
   type                      = each.value.type
-  session_duration          = each.value.session_duration
+  session_duration          = try(each.value.session_duration, null)
   auto_redirect_to_identity = each.value.auto_redirect_to_identity
   app_launcher_visible      = false
   allowed_idps              = each.value.allowed_idps
