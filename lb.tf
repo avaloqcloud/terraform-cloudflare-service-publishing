@@ -97,7 +97,13 @@ resource "cloudflare_load_balancer_monitor" "these" {
   expected_body    = try(each.value.default_pool.monitor.expected_body, null)
   expected_codes   = try(each.value.default_pool.monitor.expected_codes, null)
   follow_redirects = try(each.value.default_pool.monitor.follow_redirects, null)
-  # header
+  dynamic "header" {
+    for_each = (try(each.value.default_pool.monitor.header, null) != null) ? ([each.value.default_pool.monitor.header]) : ([])
+    content {
+      header = header.value.header
+      values = header.value.values
+    }
+  }
   interval   = try(each.value.default_pool.monitor.interval, null)
   method     = try(each.value.default_pool.monitor.method, null)
   path       = try(each.value.default_pool.monitor.path, null)

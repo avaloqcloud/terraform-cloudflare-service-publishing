@@ -146,7 +146,7 @@ variable "service_publishing" {
       enabled = optional(bool),   # Enable or disable the load balancer. Defaults to true.
       proxied = optional(bool),   # Whether the hostname gets Cloudflare's origin protection. Defaults to false. Conflicts with ttl.
       ttl     = optional(number), # Time to live (TTL) of the DNS entry for the IP address returned by this load balancer. This cannot be set for proxied load balancers. Defaults to 30. Conflicts with proxied.
-      default_pool = object({     # A list of pool IDs ordered by their failover priority. Used whenever pop_pools/country_pools/region_pools are not defined.
+      default_pool = object({     # Embedded cloudflare_load_balancer_pool object
         account_id = string,
         origins = list(object({    # The list of origins within this pool. Traffic directed at this pool is balanced across all currently healthy origins, provided the pool itself is healthy.
           name    = string,        # A human-identifiable name for the origin.
@@ -158,7 +158,7 @@ variable "service_publishing" {
           }))                       # HTTP request headers.
           weight = optional(number) # The weight (0.01 - 1.00) of this origin, relative to other origins in the pool. Equal values mean equal weighting. A weight of 0 means traffic will not be sent to this origin, but health is still checked. When origin_steering.policy="least_outstanding_requests", weight is used to scale the origin's outstanding requests. When origin_steering.policy="least_connections", weight is used to scale the origin's open connections. Defaults to 1.
         }))
-        monitor = optional(object({
+        monitor = optional(object({            # Embedded cloudflare_load_balancer_monitor object
           allow_insecure   = optional(string), # Do not validate the certificate when monitor use HTTPS. Only valid if type is "http" or "https".
           consecutive_down = optional(number), # To be marked unhealthy the monitored origin must fail this healthcheck N consecutive times. Defaults to 0.
           consecutive_up   = optional(number), # To be marked healthy the monitored origin must pass this healthcheck N consecutive times. Defaults to 0.
@@ -167,7 +167,8 @@ variable "service_publishing" {
           expected_codes   = optional(string), # The expected HTTP response code or code range of the health check. Eg 2xx. Only valid and required if type is "http" or "https".
           follow_redirects = optional(bool),   # Follow redirects if returned by the origin. Only valid if type is "http" or "https".
           header = optional(object({           # The HTTP request headers to send in the health check. It is recommended you set a Host header by default. The User-Agent header cannot be overridden.
-
+            header = string,                   # HTTP Header name.
+            values = list(string),             # Values for the HTTP headers.
           })),
           interval   = optional(number), # The interval between each health check. Shorter intervals may improve failover time, but will increase load on the origins as we check from multiple locations. Defaults to 60.
           method     = optional(string), # The method to use for the health check.
@@ -218,7 +219,6 @@ variable "service_publishing" {
       }))),
     })))
   })
-  # LB: enum for lb.session_affinity, lb.ttl and lb.proxied not set at once, lb.rules.fixed_response min 1. lb.rules.fixed_response or overrides must be set, lb.default_pool.origins.address must be unique
   # Validation
   ## Record
   ### type
@@ -337,4 +337,46 @@ variable "service_publishing" {
       error_message = "Attribute 'tls' for Spectrum Application must be one of: 'full', 'strict' (if protocol is 'tcp')."
     }
   */
+  ## Load Balancer
+  ### ttl and proxied
+  validation {
+    condition = (var.service_publishing != null && var.service_publishing.load_balancers != null) ? (
+      alltrue(flatten([
+        for lb in var.service_publishing.load_balancers :
+        (lb.proxied == true) ? (
+          (lb.ttl != null) ? false : true
+        ) : true
+      ]))
+    ) : true
+    error_message = "Attribute 'ttl' must not be set if 'proxied' is true for the same Load Balancer. Ommit attribute 'proxied' if you wish to set the 'ttl' attribute."
+  }
+  ### rules.fixed_response and rules.overrides
+  validation {
+    condition = (var.service_publishing != null && var.service_publishing.load_balancers != null) ? (
+      alltrue(flatten([
+        for lb in var.service_publishing.load_balancers :
+        (lb.rules != null) ? (
+          (
+            alltrue(flatten([
+              for r in lb.rules :
+              (r.fixed_response != null) && (r.overrides != null) ? false : true
+            ]))
+          )
+        ) : true
+      ]))
+    ) : true
+    error_message = "Attributes 'rules.fixed_response' and 'rules.overrides' cannot be set at the same time for Load Balancer."
+  }
+  ### default_pool.origins.address
+  validation {
+    condition = (var.service_publishing != null && var.service_publishing.load_balancers != null) ? (
+      alltrue(flatten([
+        for lb in var.service_publishing.load_balancers :
+        (
+          (length(lb.default_pool.origins[*].address) != length(distinct(lb.default_pool.origins[*].address))) ? false : true
+        )
+      ]))
+    ) : true
+    error_message = "Attribute 'default_pool.origins.address' must be unique in the same Load Balancer."
+  }
 }
