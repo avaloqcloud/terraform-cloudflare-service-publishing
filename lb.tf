@@ -86,7 +86,7 @@ resource "cloudflare_load_balancer_monitor" "these" {
   for_each = (var.service_publishing.load_balancers != null) ? (
     alltrue(flatten([
       for lb in var.service_publishing.load_balancers :
-      (lb.default_pool.monitor != null) # only process if optional tunnel.config is defined
+      (lb.default_pool.monitor != null) # only process if optional load_balancer.default_pool.monitor is defined
     ])) ? ({ for load_balancer in var.service_publishing.load_balancers : load_balancer.name => load_balancer }) : ({})
   ) : ({})
   account_id       = each.value.default_pool.account_id
