@@ -3,11 +3,11 @@ variable "service_publishing" {
   type = object({
     records = optional(list(object({
       zone_id = string,
-      name    = string, # The name of the record
+      name    = string,           # The name of the record
       value   = optional(string), # The value of the record. Required if matching tunnel ommited
       type    = optional(string), # The type of the record. Required if matching tunnel ommited
-      ttl     = number, # The TTL of the record.
-      proxied = bool, # Whether the record gets Cloudflare's origin protection.
+      ttl     = number,           # The TTL of the record.
+      proxied = bool,             # Whether the record gets Cloudflare's origin protection.
     }))),
     tunnels = optional(list(object({
       account_id = string,
@@ -22,7 +22,7 @@ variable "service_publishing" {
             required  = optional(bool),         # Whether the access rule is required.
             team_name = optional(string),       # Name of the team to which the access rule applies.
           })),
-          bastion_mode             = optional(bool), # Runs as jump host
+          bastion_mode             = optional(bool),   # Runs as jump host
           ca_pool                  = optional(string), # Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare. Defaults to "".
           connect_timeout          = optional(string), # Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to establish TLS, which is controlled by tlsTimeout. Defaults to 30s.
           disable_chunked_encoding = optional(bool),   # Disables chunked transfer encoding. Useful if you are running a Web Server Gateway Interface (WSGI) server. Defaults to false.
@@ -44,17 +44,17 @@ variable "service_publishing" {
           tcp_keep_alive         = optional(string), # The timeout after which a TCP keepalive packet is sent on a connection between Tunnel and the origin server. Defaults to 30s.
           tls_timeout            = optional(string), # Timeout for completing a TLS handshake to your origin server, if you have chosen to connect Tunnel to an HTTPS server. Defaults to 10s.
         })),
-        ingress_rules = list(object({ # Each incoming request received by cloudflared causes cloudflared to send a request to a local service. This section configures the rules that determine which requests are sent to which local services.
-          hostname = optional(string), # Hostname to match the incoming request with. If the hostname matches, the request will be sent to the service.
-          path     = optional(string), # Path of the incoming request. If the path matches, the request will be sent to the local service.
-          service  = string, # Name of the service to which the request will be sent.
+        ingress_rules = list(object({        # Each incoming request received by cloudflared causes cloudflared to send a request to a local service. This section configures the rules that determine which requests are sent to which local services.
+          hostname = optional(string),       # Hostname to match the incoming request with. If the hostname matches, the request will be sent to the service.
+          path     = optional(string),       # Path of the incoming request. If the path matches, the request will be sent to the local service.
+          service  = string,                 # Name of the service to which the request will be sent.
           origin_request = optional(object({ # Settings for requests sent to service.
             access = optional(object({
               aud_tag   = optional(list(string)), # Audience tags of the access rule.
               required  = optional(bool),         # Whether the access rule is required.
               team_name = optional(string),       # Name of the team to which the access rule applies.
             })),
-            bastion_mode             = optional(bool), # Runs as jump host
+            bastion_mode             = optional(bool),   # Runs as jump host
             ca_pool                  = optional(string), # Path to the certificate authority (CA) for the certificate of your origin. This option should be used only if your certificate is not signed by Cloudflare. Defaults to "".
             connect_timeout          = optional(string), # Timeout for establishing a new TCP connection to your origin server. This excludes the time taken to establish TLS, which is controlled by tlsTimeout. Defaults to 30s.
             disable_chunked_encoding = optional(bool),   # Disables chunked transfer encoding. Useful if you are running a Web Server Gateway Interface (WSGI) server. Defaults to false.
@@ -82,10 +82,10 @@ variable "service_publishing" {
     access_applications = optional(list(object({
       zone_id                   = string,
       name                      = string,
-      domain                    = optional(string), # The primary hostname and path that Access will secure.
-      type                      = string, # The application type
-      session_duration          = optional(string), # How often a user will be forced to re-authorise. Must be in the format 48h or 2h45m. Defaults to 24h
-      auto_redirect_to_identity = bool, # Option to skip identity provider selection if only one is configured in allowed_idps. Defaults to false.
+      domain                    = optional(string),       # The primary hostname and path that Access will secure.
+      type                      = string,                 # The application type
+      session_duration          = optional(string),       # How often a user will be forced to re-authorise. Must be in the format 48h or 2h45m. Defaults to 24h
+      auto_redirect_to_identity = bool,                   # Option to skip identity provider selection if only one is configured in allowed_idps. Defaults to false.
       allowed_idps              = optional(list(string)), # The identity providers selected for the application.
       self_hosted_domains       = optional(list(string)), # List of domains that access will secure. Only present for self_hosted, vnc, and ssh applications. Always includes the value set as domain.
       saas_app = optional(object({
@@ -132,10 +132,10 @@ variable "service_publishing" {
     spectrum_applications = optional(list(object({
       zone_id       = string,
       name          = string,
-      protocol      = string, # The port configuration at Cloudflare's edge. e.g. tcp/22.
+      protocol      = string,                 # The port configuration at Cloudflare's edge. e.g. tcp/22.
       origin_direct = optional(list(string)), # A list of destination addresses to the origin. e.g. tcp://192.0.2.1:22.
-      origin_dns = optional(object({ #  A destination DNS addresses to the origin.
-        name = string, # Fully qualified domain name of the origin.
+      origin_dns = optional(object({          #  A destination DNS addresses to the origin.
+        name = string,                        # Fully qualified domain name of the origin.
       })),
       origin_port = optional(number), # Origin port to proxy traffice to.
       tls         = optional(string), # TLS configuration option for Cloudflare to connect to your origin.
