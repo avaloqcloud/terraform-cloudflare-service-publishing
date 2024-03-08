@@ -283,7 +283,7 @@ variable "service_publishing" {
         )
       ]))
     ) : true
-    error_message = "Attributes 'hostname' and 'path' must not be set in the last tunnel.config.ingress_rules rule as it must match all requests. Example: {'service': 'status:502'}."
+    error_message = "Attributes 'hostname' and 'path' must not be set in the last tunnel.config.ingress_rules rule as it must match all requests. Example: {'service': 'http_status:502'}."
   }
   ## Spectrum Application
   ### origin_direct or origin_dns (mutually exclusive)
