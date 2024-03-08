@@ -333,8 +333,8 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.26.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.6.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | = 4.26.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6.0 |
 
 ## Modules
 
