@@ -5,6 +5,7 @@ output "service_publishing" {
     access_applications   = cloudflare_access_application.these
     access_service_tokens = cloudflare_access_service_token.these
     spectrum_applications = cloudflare_spectrum_application.these
+    load_balancers        = cloudflare_load_balancer.these
   }
   sensitive   = true
   description = "Service Publishing output object."

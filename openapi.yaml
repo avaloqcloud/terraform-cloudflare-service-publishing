@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: "Service Publishing"
   description: "Service Publishing with Cloudflare."
-  version: 0.2.2
+  version: 0.4.0
   x-logo:
     url: "https://avatars.githubusercontent.com/u/140297229?s=400"
     backgroundColor: '#FFFFFF'
@@ -53,6 +53,11 @@ components:
           items:
             anyOf:
               - $ref: '#/components/schemas/spectrum_application'
+        load_balancers:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/load_balancer'
     # Derived objects from upstream
     record:
       type: object
@@ -121,3 +126,43 @@ components:
           $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/legacy-jhs_origin_port'
         tls:
           $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/legacy-jhs_tls'
+    load_balancer:
+      type: object
+      allOf:
+        - $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_load-balancer'
+        - properties:
+            zone_id:
+              $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_load-balancer_components-schemas-identifier'
+            default_pool:
+              type: object
+              description: "Default pool of the loadbalancer. Will be automatically added as fallback_pool as well."
+              required:
+                - name
+                - origins
+              properties:
+                account_id:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_load-balancer_components-schemas-identifier'
+                description:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_schemas-description'
+                enabled:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_enabled'
+                latitude:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_latitude'
+                load_shedding:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_load_shedding'
+                longitude:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_longitude'
+                minimum_origins:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_minimum_origins'
+                monitor:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_monitor-editable'
+                name:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_name'
+                notification_email:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_notification_email'
+                notification_filter:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_notification_filter'
+                origin_steering:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_origin_steering'
+                origins:
+                  $ref: 'https://raw.githubusercontent.com/cloudflare/api-schemas/main/openapi.yaml#/components/schemas/load-balancing_origins'
