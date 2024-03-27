@@ -14,7 +14,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
     "service_publishing": {
         "records": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "value": "198.51.100.4",
                 "type": "A",
@@ -59,7 +58,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
     "service_publishing": {
         "records": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "ttl": 1,
                 "proxied": true
@@ -93,7 +91,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
     "service_publishing": {
         "records": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "ttl": 1,
                 "proxied": true
@@ -118,7 +115,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
         ],
         "access_applications": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "domain": "example.service.example.com",
                 "type": "self_hosted",
@@ -130,7 +126,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
         ],
         "access_policies": [
             {
-                "zone_id"        : "023e105f4ecef8ad9ca31a8372d0c353",
                 "name"           : "example.service.example.com",
                 "precedence"     : 1,
                 "decision"       : "allow",
@@ -155,7 +150,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
     "service_publishing": {
         "records": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "ttl": 1,
                 "proxied": true
@@ -180,7 +174,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
         ],
         "access_applications": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "domain": "example.service.example.com",
                 "type": "self_hosted",
@@ -190,7 +183,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
         ],
         "access_policies": [
             {
-                "zone_id"        : "023e105f4ecef8ad9ca31a8372d0c353",
                 "name"           : "example.service.example.com",
                 "precedence"     : 1,
                 "decision"       : "non_identity",
@@ -214,7 +206,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
     "service_publishing": {
         "spectrum_applications": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "protocol": "tcp/443",
                 "origin_dns": {
@@ -235,7 +226,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
     "service_publishing": {
         "spectrum_applications": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "example.service.example.com",
                 "protocol": "tcp/587",
                 "origin_direct": [
@@ -255,7 +245,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
     "service_publishing": {
         "records": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "grafana.service.example.com",
                 "ttl": 1,
                 "proxied": true
@@ -280,7 +269,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
         ],
         "access_applications": [
             {
-                "zone_id": "023e105f4ecef8ad9ca31a8372d0c353",
                 "name": "grafana.service.example.com",
                 "domain": "grafana.service.example.com",
                 "type": "saas",
@@ -299,7 +287,6 @@ Provides a reusable Terraform module to publish services via Cloudflare, compati
         ],
         "access_policies": [
             {
-                "zone_id"        : "023e105f4ecef8ad9ca31a8372d0c353",
                 "name"           : "grafana.service.example.com",
                 "precedence"     : 1,
                 "decision"       : "allow",
