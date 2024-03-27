@@ -1,7 +1,7 @@
 # Access Applications
 resource "cloudflare_access_application" "these" {
   for_each = (var.service_publishing.access_applications != null) ? ({ for access_application in var.service_publishing.access_applications : access_application.name => access_application }) : ({})
-  zone_id  = each.value.zone_id
+  zone_id  = data.cloudflare_zone.these["${each.key}"].id
   name     = each.value.name
   # If DNS Record found with matching name use name from record, else take value from input
   domain                    = (try(cloudflare_record.these["${each.key}"], null) != null) ? (cloudflare_record.these["${each.key}"].hostname) : (each.value.domain)
@@ -31,7 +31,7 @@ resource "cloudflare_access_policy" "these" {
   for_each = (var.service_publishing.access_policies != null) ? ({ for access_policy in var.service_publishing.access_policies : access_policy.name => access_policy }) : ({})
   # If Access Application found with matching name use that id, else take from input
   application_id = (try(cloudflare_access_application.these["${each.key}"], null) != null) ? (cloudflare_access_application.these["${each.key}"].id) : (each.value.application_id)
-  zone_id        = each.value.zone_id
+  zone_id        = data.cloudflare_zone.these["${each.key}"].id
   name           = each.value.name
   precedence     = each.value.precedence
   decision       = each.value.decision

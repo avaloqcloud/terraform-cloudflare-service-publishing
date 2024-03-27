@@ -1,7 +1,7 @@
 # Spectrum Applications (Arbritary TCP/UDP)
 resource "cloudflare_spectrum_application" "these" {
   for_each           = (var.service_publishing.spectrum_applications != null) ? ({ for spectrum_application in var.service_publishing.spectrum_applications : spectrum_application.name => spectrum_application }) : ({})
-  zone_id            = each.value.zone_id
+  zone_id            = data.cloudflare_zone.these["${each.key}"].id
   protocol           = each.value.protocol
   traffic_type       = "direct"
   argo_smart_routing = true

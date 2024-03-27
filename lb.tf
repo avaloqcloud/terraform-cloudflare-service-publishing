@@ -1,6 +1,6 @@
 resource "cloudflare_load_balancer" "these" {
   for_each             = (var.service_publishing.load_balancers != null) ? ({ for load_balancer in var.service_publishing.load_balancers : load_balancer.name => load_balancer }) : ({})
-  zone_id              = each.value.zone_id
+  zone_id              = data.cloudflare_zone.these["${each.key}"].id
   name                 = each.value.name
   fallback_pool_id     = cloudflare_load_balancer_pool.these["${each.key}"].id
   default_pool_ids     = [cloudflare_load_balancer_pool.these["${each.key}"].id] # get matching lb pool id

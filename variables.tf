@@ -2,7 +2,6 @@ variable "service_publishing" {
   description = "Service Publishing input object."
   type = object({
     records = optional(list(object({
-      zone_id = string,
       name    = string,           # The name of the record
       value   = optional(string), # The value of the record. Required if matching tunnel ommited
       type    = optional(string), # The type of the record. Required if matching tunnel ommited
@@ -80,7 +79,6 @@ variable "service_publishing" {
       })),
     }))),
     access_applications = optional(list(object({
-      zone_id                   = string,
       name                      = string,
       domain                    = optional(string),       # The primary hostname and path that Access will secure.
       type                      = string,                 # The application type
@@ -115,7 +113,6 @@ variable "service_publishing" {
     })))
     access_policies = optional(list(object({
       application_id = optional(string),
-      zone_id        = string,
       name           = string,
       precedence     = number, # The unique precedence for policies on a single application.
       decision       = string, # Defines the action Access will take if the policy matches the user. Available values: allow, deny, non_identity, bypass.
@@ -130,7 +127,6 @@ variable "service_publishing" {
       name       = string,
     })))
     spectrum_applications = optional(list(object({
-      zone_id       = string,
       name          = string,
       protocol      = string,                 # The port configuration at Cloudflare's edge. e.g. tcp/22.
       origin_direct = optional(list(string)), # A list of destination addresses to the origin. e.g. tcp://192.0.2.1:22.
@@ -141,7 +137,6 @@ variable "service_publishing" {
       tls         = optional(string), # TLS configuration option for Cloudflare to connect to your origin.
     })))
     load_balancers = optional(list(object({
-      zone_id = string,
       name    = string,           # The DNS hostname to associate with your load balancer. If this hostname already exists as a DNS record in Cloudflare's DNS, the load balancer will take precedence and the DNS record will not be used.
       enabled = optional(bool),   # Enable or disable the load balancer. Defaults to true.
       proxied = optional(bool),   # Whether the hostname gets Cloudflare's origin protection. Defaults to false. Conflicts with ttl.
