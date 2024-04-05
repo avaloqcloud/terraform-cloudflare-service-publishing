@@ -100,8 +100,9 @@ variable "service_publishing" {
           source = object({
             name = string, # SAML: The name of the attribute as provided by the IDP.
           }),
-          default_relay_state       = optional(string), # SAML: The relay state used if not provided by the identity provider.
-          name_id_transform_jsonata = optional(string), # SAML: A [JSONata](https://jsonata.org/) expression that transforms an application's user identities into a NameID value for its SAML assertion. This expression should evaluate to a singular string. The output of this expression can override the `name_id_format` setting.
+          default_relay_state              = optional(string), # SAML: The relay state used if not provided by the identity provider.
+          name_id_transform_jsonata        = optional(string), # SAML: A [JSONata](https://jsonata.org/) expression that transforms an application's user identities into a NameID value for its SAML assertion. This expression should evaluate to a singular string. The output of this expression can override the `name_id_format` setting.
+          saml_attribute_transform_jsonata = optional(string), # SAML: A [JSONata](https://jsonata.org/) expression that transforms an application's user identities into attribute assertions in the SAML response. The expression can transform id, email, name, and groups values. It can also transform fields listed in the saml_attributes or oidc_fields of the identity provider used to authenticate. The output of this expression must be a JSON object.
         })),
         # OIDC
         redirect_uris      = optional(list(string)), # OIDC: The permitted URL's for Cloudflare to return Authorization codes and Access/ID tokens. example: ["https://saas-app.example/sso/oauth2/callback"]
