@@ -215,6 +215,7 @@ variable "service_publishing" {
       }))),
     })))
   })
+  default = {}
   # Validation
   ## Record
   ### type
