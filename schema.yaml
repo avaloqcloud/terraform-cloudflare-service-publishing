@@ -1,9 +1,0 @@
-title: "Service Publishing"
-description: "Service Publishing with Cloudflare on OCI ORM"
-schemaVersion: 1.1.0
-locale: "en"
-variables:
-  service_publishing:
-    type: object
-    title: "Service Publishing"
-    description: "Service Publishing input object."
