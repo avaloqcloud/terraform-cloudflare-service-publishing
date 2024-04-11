@@ -1,6 +1,5 @@
 terraform {
-  experiments      = [module_variable_optional_attrs]
-  required_version = "~> 1.2.9"
+  required_version = ">= 1.4.3, <= 1.7.4"
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
