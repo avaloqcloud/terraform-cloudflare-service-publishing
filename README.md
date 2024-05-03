@@ -310,15 +310,15 @@ Provides a reusable Terraform module to publish services via Cloudflare.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4.3, <= 1.7.4 |
-| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | = 4.29.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.0 |
+| <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | ~> 4.31 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | = 4.29.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6.0 |
+| <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | ~> 4.31 |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6 |
 
 ## Modules
 
@@ -328,18 +328,18 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [cloudflare_access_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/access_application) | resource |
-| [cloudflare_access_policy.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/access_policy) | resource |
-| [cloudflare_access_service_token.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/access_service_token) | resource |
-| [cloudflare_load_balancer.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/load_balancer) | resource |
-| [cloudflare_load_balancer_monitor.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/load_balancer_monitor) | resource |
-| [cloudflare_load_balancer_pool.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/load_balancer_pool) | resource |
-| [cloudflare_record.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/record) | resource |
-| [cloudflare_spectrum_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/spectrum_application) | resource |
-| [cloudflare_tunnel.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/tunnel) | resource |
-| [cloudflare_tunnel_config.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/resources/tunnel_config) | resource |
+| [cloudflare_access_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_application) | resource |
+| [cloudflare_access_policy.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_policy) | resource |
+| [cloudflare_access_service_token.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/access_service_token) | resource |
+| [cloudflare_load_balancer.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer) | resource |
+| [cloudflare_load_balancer_monitor.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_monitor) | resource |
+| [cloudflare_load_balancer_pool.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/load_balancer_pool) | resource |
+| [cloudflare_record.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) | resource |
+| [cloudflare_spectrum_application.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/spectrum_application) | resource |
+| [cloudflare_tunnel.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel) | resource |
+| [cloudflare_tunnel_config.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) | resource |
 | [random_id.these](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
-| [cloudflare_zone.these](https://registry.terraform.io/providers/cloudflare/cloudflare/4.29.0/docs/data-sources/zone) | data source |
+| [cloudflare_zone.these](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/zone) | data source |
 
 ## Inputs
 
