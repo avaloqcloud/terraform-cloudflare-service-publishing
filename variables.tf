@@ -235,10 +235,10 @@ variable "service_publishing" {
     condition = (var.service_publishing != null && var.service_publishing.records != null) && (var.service_publishing.tunnels == null) ? (
       alltrue(flatten([
         for r in var.service_publishing.records :
-        (r.value != null || r.type != null)
+        (r.content != null || r.type != null)
       ]))
     ) : true
-    error_message = "Attributes 'value' and 'type' for Record must be specified if matching Tunnel ommited."
+    error_message = "Attributes 'content' and 'type' for Record must be specified if matching Tunnel ommited."
   }
   ## Access Application
   ### type
