@@ -3,7 +3,7 @@ variable "service_publishing" {
   type = object({
     records = optional(list(object({
       name    = string,           # The name of the record
-      value   = optional(string), # The value of the record. Required if matching tunnel ommited
+      content = optional(string), # The content of the record. Required if matching tunnel ommited
       type    = optional(string), # The type of the record. Required if matching tunnel ommited
       ttl     = number,           # The TTL of the record.
       proxied = bool,             # Whether the record gets Cloudflare's origin protection.
