@@ -1,5 +1,5 @@
 # Access Applications
-resource "cloudflare_access_application" "these" {
+resource "cloudflare_zero_trust_access_application" "these" {
   for_each = (var.service_publishing.access_applications != null) ? ({ for access_application in var.service_publishing.access_applications : access_application.name => access_application }) : ({})
   zone_id  = data.cloudflare_zone.these["${each.key}"].id
   name     = each.value.name
@@ -27,10 +27,10 @@ resource "cloudflare_access_application" "these" {
 }
 
 # Access Policies
-resource "cloudflare_access_policy" "these" {
+resource "cloudflare_zero_trust_access_policy" "these" {
   for_each = (var.service_publishing.access_policies != null) ? ({ for access_policy in var.service_publishing.access_policies : access_policy.name => access_policy }) : ({})
   # If Access Application found with matching name use that id, else take from input
-  application_id = (try(cloudflare_access_application.these["${each.key}"], null) != null) ? (cloudflare_access_application.these["${each.key}"].id) : (each.value.application_id)
+  application_id = (try(cloudflare_zero_trust_access_application.these["${each.key}"], null) != null) ? (cloudflare_zero_trust_access_application.these["${each.key}"].id) : (each.value.application_id)
   zone_id        = data.cloudflare_zone.these["${each.key}"].id
   name           = each.value.name
   precedence     = each.value.precedence
@@ -41,13 +41,13 @@ resource "cloudflare_access_policy" "these" {
       login_method = try(each.value.include.login_method, null)
       email_domain = try(each.value.include.email_domain, null)
       # If Access Service Token found with matching name and decision is 'non_identity' use that id, else take from input
-      service_token = (try(cloudflare_access_service_token.these["${each.key}"], null) != null) && each.value.decision == "non_identity" ? ([cloudflare_access_service_token.these["${each.key}"].id]) : try(each.value.include.service_token, null)
+      service_token = (try(cloudflare_zero_trust_access_service_token.these["${each.key}"], null) != null) && each.value.decision == "non_identity" ? ([cloudflare_zero_trust_access_service_token.these["${each.key}"].id]) : try(each.value.include.service_token, null)
     }
   }
 }
 
 # Access Service Tokens
-resource "cloudflare_access_service_token" "these" {
+resource "cloudflare_zero_trust_access_service_token" "these" {
   for_each   = (var.service_publishing.access_service_tokens != null) ? ({ for service_token in var.service_publishing.access_service_tokens : service_token.name => service_token }) : ({})
   account_id = each.value.account_id
   name       = each.value.name

@@ -4,14 +4,14 @@ resource "random_id" "these" {
   byte_length = 35
 }
 
-resource "cloudflare_tunnel" "these" {
+resource "cloudflare_zero_trust_tunnel_cloudflared" "these" {
   for_each   = (var.service_publishing.tunnels != null) ? ({ for tunnel in var.service_publishing.tunnels : tunnel.name => tunnel }) : ({})
   account_id = each.value.account_id
   name       = each.value.name
   secret     = random_id.these["${each.key}"].b64_std
 }
 
-resource "cloudflare_tunnel_config" "these" {
+resource "cloudflare_zero_trust_tunnel_cloudflared_config" "these" {
   for_each = (var.service_publishing.tunnels != null) ? (
     alltrue(flatten([
       for t in var.service_publishing.tunnels :
@@ -20,7 +20,7 @@ resource "cloudflare_tunnel_config" "these" {
   ) : ({})
   account_id = each.value.account_id
   # If Tunnel found with matching name use reference of tunnel, else take tunnel_id from input
-  tunnel_id = (try(cloudflare_tunnel.these["${each.key}"], null) != null) ? (cloudflare_tunnel.these["${each.key}"].id) : (each.value.tunnel_id)
+  tunnel_id = (try(cloudflare_zero_trust_tunnel_cloudflared.these["${each.key}"], null) != null) ? (cloudflare_zero_trust_tunnel_cloudflared.these["${each.key}"].id) : (each.value.tunnel_id)
   dynamic "config" {
     for_each = (try(each.value.config, null) != null) ? ([each.value.config]) : ([])
     content {
