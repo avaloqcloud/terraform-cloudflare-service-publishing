@@ -11,7 +11,7 @@ variable "service_publishing" {
     tunnels = optional(list(object({
       account_id = string,
       name       = string,
-      config = optional(object({ # Embedded cloudflare_tunnel_config object
+      config = optional(object({ # Embedded cloudflare_zero_trust_tunnel_cloudflared_config object
         warp_routing = optional(object({
           enabled = bool, # Whether WARP routing is enabled.
         })),
